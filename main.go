@@ -6,9 +6,9 @@
 package main
 
 import (
+	"bitbucket.org/kisom/gopush/pushover"
 	"flag"
 	"fmt"
-	"bitbucket.org/kisom/gopush/pushover"
 )
 
 func main() {
@@ -23,17 +23,17 @@ func main() {
 
 	flag.Parse()
 
-  identity := pushover.Authenticate(*key, *recipient)
+	identity := pushover.Authenticate(*key, *recipient)
 
 	var label, message string
 	if *service != "" {
 		label = fmt.Sprintf("%s/%s", *host, *service)
 		message = fmt.Sprintf("%s on %s is %s\n%s", *service, *host, *state,
-		*description)
+			*description)
 	} else {
 		label = *host
 		message = fmt.Sprintf("%s is %s\n%s", *host, *state, *description)
 	}
 
-  pushover.Notify_titled(identity, message, fmt.Sprintf("%s: %s", *alert_type, label) )
+	pushover.Notify_titled(identity, message, fmt.Sprintf("%s: %s", *alert_type, label))
 }
